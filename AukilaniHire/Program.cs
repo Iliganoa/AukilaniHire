@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ApplicationDb;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AukilaniHireContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AukilaniHireContext") ?? throw new InvalidOperationException("Connection string 'AukilaniHireContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Context>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

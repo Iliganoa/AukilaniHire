@@ -33,7 +33,7 @@ namespace AukilaniHire.Controllers
             }
 
             var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.MemberID == id);
+                .FirstOrDefaultAsync(m => m.MemberId == id);
             if (member == null)
             {
                 return NotFound();
@@ -53,9 +53,9 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MemberID,LastName,FirstName,Email,PhoneNumber")] Member member)
+        public async Task<IActionResult> Create([Bind("MemberId,LastName,FirstName,Email,PhoneNumber")] Member member)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(member);
                 await _context.SaveChangesAsync();
@@ -85,9 +85,9 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MemberID,LastName,FirstName,Email,PhoneNumber")] Member member)
+        public async Task<IActionResult> Edit(int id, [Bind("MemberId,LastName,FirstName,Email,PhoneNumber")] Member member)
         {
-            if (id != member.MemberID)
+            if (id != member.MemberId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace AukilaniHire.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.MemberID))
+                    if (!MemberExists(member.MemberId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace AukilaniHire.Controllers
             }
 
             var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.MemberID == id);
+                .FirstOrDefaultAsync(m => m.MemberId == id);
             if (member == null)
             {
                 return NotFound();
@@ -150,7 +150,7 @@ namespace AukilaniHire.Controllers
 
         private bool MemberExists(int id)
         {
-            return _context.Member.Any(e => e.MemberID == id);
+            return _context.Member.Any(e => e.MemberId == id);
         }
     }
 }

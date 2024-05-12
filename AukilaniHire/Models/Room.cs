@@ -1,5 +1,6 @@
 ﻿using AukilaniHire.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AukilaniHire.Models
@@ -11,12 +12,18 @@ namespace AukilaniHire.Models
     }
     public class Room
     {
-        
-        public int RoomID { get; set; }
+        public string RoomName { get; set; }
+        public int RoomId { get; set; }
         public RoomType RoomType { get; set; }
+
+        [Range(20,500,ErrorMessage ="Must enter correct estimate")]
+        [Display(Name ="People capacity")]
         public int Capacity { get; set; }
+
+       // [DataType(DataType.Currency)]
+       // [MaxLength(7),MinLength(2,ErrorMessage = "Enter suitable price")]
         public decimal HireCost{ get; set; }
 
-        public ICollection<Booking> Booking { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

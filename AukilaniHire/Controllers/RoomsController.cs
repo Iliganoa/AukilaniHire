@@ -33,7 +33,7 @@ namespace AukilaniHire.Controllers
             }
 
             var room = await _context.Room
-                .FirstOrDefaultAsync(m => m.RoomID == id);
+                .FirstOrDefaultAsync(m => m.RoomId == id);
             if (room == null)
             {
                 return NotFound();
@@ -53,9 +53,9 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoomID,RoomType,Capacity,HireCost")] Room room)
+        public async Task<IActionResult> Create([Bind("RoomName,RoomId,RoomType,Capacity,HireCost")] Room room)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(room);
                 await _context.SaveChangesAsync();
@@ -85,14 +85,14 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RoomID,RoomType,Capacity,HireCost")] Room room)
+        public async Task<IActionResult> Edit(int id, [Bind("RoomName,RoomId,RoomType,Capacity,HireCost")] Room room)
         {
-            if (id != room.RoomID)
+            if (id != room.RoomId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -101,7 +101,7 @@ namespace AukilaniHire.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomExists(room.RoomID))
+                    if (!RoomExists(room.RoomId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace AukilaniHire.Controllers
             }
 
             var room = await _context.Room
-                .FirstOrDefaultAsync(m => m.RoomID == id);
+                .FirstOrDefaultAsync(m => m.RoomId == id);
             if (room == null)
             {
                 return NotFound();
@@ -150,7 +150,7 @@ namespace AukilaniHire.Controllers
 
         private bool RoomExists(int id)
         {
-            return _context.Room.Any(e => e.RoomID == id);
+            return _context.Room.Any(e => e.RoomId == id);
         }
     }
 }

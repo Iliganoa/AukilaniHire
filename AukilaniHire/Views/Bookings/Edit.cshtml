@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
@@ -12,17 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BookingID" />
-            <div class="form-group">
-                <label asp-for="MemberID" class="control-label"></label>
-                <select asp-for="MemberID" class="form-control" asp-items="ViewBag.MemberID"></select>
-                <span asp-validation-for="MemberID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomID" class="control-label"></label>
-                <select asp-for="RoomID" class="form-control" asp-items="ViewBag.RoomID"></select>
-                <span asp-validation-for="RoomID" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="BookingId" />
             <div class="form-group">
                 <label asp-for="BeginDate" class="control-label"></label>
                 <input asp-for="BeginDate" class="form-control" />
@@ -32,6 +23,26 @@
                 <label asp-for="EndDate" class="control-label"></label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BeginTime" class="control-label"></label>
+                <input asp-for="BeginTime" class="form-control" />
+                <span asp-validation-for="BeginTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+                <select asp-for="MemberId" class="form-control" asp-items="ViewBag.MemberId"></select>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomId" class="control-label"></label>
+                <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
+                <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

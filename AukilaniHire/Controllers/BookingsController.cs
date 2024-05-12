@@ -36,7 +36,7 @@ namespace AukilaniHire.Controllers
             var booking = await _context.Booking
                 .Include(b => b.Member)
                 .Include(b => b.Room)
-                .FirstOrDefaultAsync(m => m.BookingID == id);
+                .FirstOrDefaultAsync(m => m.BookingId == id);
             if (booking == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace AukilaniHire.Controllers
         // GET: Bookings/Create
         public IActionResult Create()
         {
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberID", "MemberID");
-            ViewData["RoomID"] = new SelectList(_context.Set<Room>(), "RoomID", "RoomID");
+            ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email");
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName");
             return View();
         }
 
@@ -58,16 +58,16 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookingID,MemberID,RoomID,BeginDate,EndDate")] Booking booking)
+        public async Task<IActionResult> Create([Bind("BookingId,BeginDate,EndDate,EndTime,BeginTime,MemberId,RoomId")] Booking booking, Room room)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberID", "MemberID", booking.MemberID);
-            ViewData["RoomID"] = new SelectList(_context.Set<Room>(), "RoomID", "RoomID", booking.RoomID);
+            ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName", room.RoomName);
             return View(booking);
         }
 
@@ -84,8 +84,8 @@ namespace AukilaniHire.Controllers
             {
                 return NotFound();
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberID", "MemberID", booking.MemberID);
-            ViewData["RoomID"] = new SelectList(_context.Set<Room>(), "RoomID", "RoomID", booking.RoomID);
+            ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
             return View(booking);
         }
 
@@ -94,9 +94,9 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingID,MemberID,RoomID,BeginDate,EndDate")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingId,BeginDate,EndDate,EndTime,BeginTime,MemberId,RoomId")] Booking booking)
         {
-            if (id != booking.BookingID)
+            if (id != booking.BookingId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace AukilaniHire.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookingExists(booking.BookingID))
+                    if (!BookingExists(booking.BookingId))
                     {
                         return NotFound();
                     }
@@ -121,8 +121,8 @@ namespace AukilaniHire.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberID", "MemberID", booking.MemberID);
-            ViewData["RoomID"] = new SelectList(_context.Set<Room>(), "RoomID", "RoomID", booking.RoomID);
+            ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
             return View(booking);
         }
 
@@ -137,7 +137,7 @@ namespace AukilaniHire.Controllers
             var booking = await _context.Booking
                 .Include(b => b.Member)
                 .Include(b => b.Room)
-                .FirstOrDefaultAsync(m => m.BookingID == id);
+                .FirstOrDefaultAsync(m => m.BookingId == id);
             if (booking == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace AukilaniHire.Controllers
 
         private bool BookingExists(int id)
         {
-            return _context.Booking.Any(e => e.BookingID == id);
+            return _context.Booking.Any(e => e.BookingId == id);
         }
     }
 }

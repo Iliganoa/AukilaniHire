@@ -31,6 +31,8 @@ namespace AukilaniHire.Models
         [Required(ErrorMessage = "Enter valid Booking time")]
         [DataType(DataType.Time)]
         public TimeOnly EndTime { get; set; }
-        
+
+     
+
     }
 }

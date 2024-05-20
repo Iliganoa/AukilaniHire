@@ -15,6 +15,7 @@ public class AukilaniHireContext : IdentityDbContext
 
     public DbSet<AukilaniHire.Models.Member> Member { get; set; } = default!;
 
+
     public DbSet<AukilaniHire.Models.Booking> Booking { get; set; } = default!;
 
     public DbSet<AukilaniHire.Models.Room> Room { get; set; } = default!;

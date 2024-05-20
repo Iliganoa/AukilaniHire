@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AukilaniHire.Models;
+using Microsoft.Data.SqlClient;
 
 namespace AukilaniHire.Controllers
 {
@@ -19,9 +20,27 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var members = from m in _context.Member
+                          select m;
+            if (!String.IsNullOrEmpty(searchString))
+                members = members.Where(s => s.LastName.Contains(searchString )
+                                        || s.FirstName.Contains(searchString));
+        
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    members = members.OrderByDescending(m => m.FirstName);
+                    
+                    members = members.OrderByDescending(m => m.LastName);
+                    break;
+            }
             return View(await _context.Member.ToListAsync());
+
         }
 
         // GET: Members/Details/5

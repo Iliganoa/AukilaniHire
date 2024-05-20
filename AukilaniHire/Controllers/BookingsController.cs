@@ -19,10 +19,9 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var aukilaniHireContext = _context.Booking.Include(b => b.Member).Include(b => b.Room);
-            return View(await aukilaniHireContext.ToListAsync());
+            return View(await _context.Booking.ToListAsync());
         }
 
         // GET: Bookings/Details/5

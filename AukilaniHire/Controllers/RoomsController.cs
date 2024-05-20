@@ -19,9 +19,11 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+
             return View(await _context.Room.ToListAsync());
+
         }
 
         // GET: Rooms/Details/5

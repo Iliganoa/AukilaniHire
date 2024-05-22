@@ -20,26 +20,31 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(String sortOrder, string searchString)
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             var members = from m in _context.Member
                           select m;
-            if (!String.IsNullOrEmpty(searchString))
-                members = members.Where(s => s.LastName.Contains(searchString )
-                                        || s.FirstName.Contains(searchString));
+
+            //if (!String.IsNullOrEmpty(searchString))
+               //members = members.Where(s => s.LastName.Contains(searchString )
+                                       //|| s.FirstName.Contains(searchString));
         
             switch (sortOrder)
             {
                 case "name_desc":
                     members = members.OrderByDescending(m => m.FirstName);
                     
+                    //members = members.OrderBy(m => m.FirstName);
+
                     members = members.OrderByDescending(m => m.LastName);
+                    
                     break;
             }
-            return View(await _context.Member.ToListAsync());
+
+            return View(await members.ToListAsync());
 
         }
 

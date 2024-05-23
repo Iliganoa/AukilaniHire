@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.RoomName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoomType)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.RoomType)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Capacity)

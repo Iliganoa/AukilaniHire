@@ -28,9 +28,9 @@ namespace AukilaniHire.Controllers
             var members = from m in _context.Member
                           select m;
 
-            //if (!String.IsNullOrEmpty(searchString))
-               //members = members.Where(s => s.LastName.Contains(searchString )
-                                       //|| s.FirstName.Contains(searchString));
+            if (!String.IsNullOrEmpty(searchString))
+               members = members.Where(s => s.LastName.Contains(searchString )
+                                       || s.FirstName.Contains(searchString));
         
             switch (sortOrder)
             {

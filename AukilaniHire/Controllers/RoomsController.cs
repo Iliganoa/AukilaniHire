@@ -28,15 +28,22 @@ namespace AukilaniHire.Controllers
             var rooms = from m in _context.Room
                           select m;
 
-            //if (!String.IsNullOrEmpty(searchString))
-                //members = members.Where(s => s.LastName.Contains(searchString)
-                                        //|| s.FirstName.Contains(searchString));
+            if (!String.IsNullOrEmpty(searchString))
+                rooms = rooms.Where(s => s.RoomName.Contains(searchString));
+                                        //|| s.RoomName.Contains(searchString));
 
             switch (sortOrder)
             {
                 case "name_desc":
                     rooms = rooms.OrderByDescending(m => m.RoomType);
+
+                    rooms = rooms.OrderByDescending(m => m.HireCost);
+
+                    rooms = rooms.OrderByDescending(m => m.Capacity);
                     break;
+
+                
+
             }
 
             return View(await rooms.ToListAsync());

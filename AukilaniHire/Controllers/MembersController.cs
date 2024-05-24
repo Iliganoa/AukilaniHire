@@ -40,6 +40,8 @@ namespace AukilaniHire.Controllers
                     //members = members.OrderBy(m => m.FirstName);
 
                     members = members.OrderByDescending(m => m.LastName);
+
+                    members = members.OrderByDescending(m => m.Email);
                     
                     break;
             }

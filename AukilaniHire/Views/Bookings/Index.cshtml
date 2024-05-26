@@ -14,22 +14,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BeginDate)
+                @Html.DisplayNameFor(model => model.Member)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.DisplayNameFor(model => model.Room)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.BeginDate)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.EndDate)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BeginTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Member)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Room)
+                @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th></th>
         </tr>
@@ -38,22 +38,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.RoomName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BeginDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.BeginTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.RoomId)
+                @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> |

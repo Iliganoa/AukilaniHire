@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AukilaniHire.Models;
+using Microsoft.Data.SqlClient;
 
 namespace AukilaniHire.Controllers
 {
@@ -19,9 +20,37 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index(string sortOrder)
+        //Member and Room column is not showing on the web App
+        public async Task<IActionResult> Index(String sortOrder, string searchString )
         {
-            return View(await _context.Booking.ToListAsync());
+            var aukilaniHireContext = _context.Booking.Include(b => b.Member).Include(b => b.Room);
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var bookings = from b in _context.Booking
+                          select b;
+
+            //if (!String.IsNullOrEmpty(searchString))
+                //bookings = bookings.Where(s => s.LastName.Contains(searchString)
+                                        //|| s.FirstName.Contains(searchString));
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    bookings = bookings.OrderByDescending(b => b.Room);
+
+                    //members = members.OrderBy(m => m.FirstName);
+
+                    //bookings = bookings.OrderByDescending(m => m.LastName);
+
+                    //bookings = bookings.OrderByDescending(m => m.Email);
+
+                    break;
+            }
+
+            //return View(await bookings.ToListAsync());
+            return View(await aukilaniHireContext.ToListAsync());
         }
 
         // GET: Bookings/Details/5
@@ -57,16 +86,16 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookingId,BeginDate,EndDate,EndTime,BeginTime,MemberId,RoomId")] Booking booking, Room room)
+        public async Task<IActionResult> Create([Bind("BookingId,MemberId,RoomId,BeginDate,EndDate,BeginTime,EndTime")] Booking booking)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName", room.RoomName);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName", booking.RoomId);
             return View(booking);
         }
 
@@ -84,7 +113,7 @@ namespace AukilaniHire.Controllers
                 return NotFound();
             }
             ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName", booking.RoomId);
             return View(booking);
         }
 
@@ -93,7 +122,7 @@ namespace AukilaniHire.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingId,BeginDate,EndDate,EndTime,BeginTime,MemberId,RoomId")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingId,MemberId,RoomId,BeginDate,EndDate,BeginTime,EndTime")] Booking booking)
         {
             if (id != booking.BookingId)
             {
@@ -121,7 +150,7 @@ namespace AukilaniHire.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MemberId"] = new SelectList(_context.Member, "MemberId", "Email", booking.MemberId);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
+            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomName", booking.RoomId);
             return View(booking);
         }
 

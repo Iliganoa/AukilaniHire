@@ -26,6 +26,7 @@ namespace AukilaniHire.Controllers
             var aukilaniHireContext = _context.Booking.Include(b => b.Member).Include(b => b.Room);
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             var bookings = from b in _context.Booking
@@ -39,13 +40,10 @@ namespace AukilaniHire.Controllers
             {
                 case "name_desc":
                     bookings = bookings.OrderByDescending(b => b.Room);
+                    break;
 
-                    //members = members.OrderBy(m => m.FirstName);
-
-                    //bookings = bookings.OrderByDescending(m => m.LastName);
-
-                    //bookings = bookings.OrderByDescending(m => m.Email);
-
+                case "date_desc":
+                    bookings = bookings.OrderByDescending(b => b.BeginDate);
                     break;
             }
 

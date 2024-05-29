@@ -21,21 +21,18 @@ namespace AukilaniHire.Controllers
 
         // GET: Bookings
         //Member and Room column is not showing on the web App
-        public async Task<IActionResult> Index(String sortOrder, string searchString )
+        public async Task<IActionResult> Index(String sortOrder)
         {
             var aukilaniHireContext = _context.Booking.Include(b => b.Member).Include(b => b.Room);
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            var bookings = from b in _context.Booking
+
+            var bookings = from b in aukilaniHireContext
                           select b;
 
-            //if (!String.IsNullOrEmpty(searchString))
-                //bookings = bookings.Where(s => s.LastName.Contains(searchString)
-                                        //|| s.FirstName.Contains(searchString));
-
+            
             switch (sortOrder)
             {
                 case "name_desc":
@@ -44,11 +41,12 @@ namespace AukilaniHire.Controllers
 
                 case "date_desc":
                     bookings = bookings.OrderByDescending(b => b.BeginDate);
+                    bookings = bookings.OrderByDescending(b => b.BeginTime);
                     break;
             }
 
-            //return View(await bookings.ToListAsync());
-            return View(await aukilaniHireContext.ToListAsync());
+            return View(await bookings.AsNoTracking().ToListAsync());
+            //return View(await aukilaniHireContext.ToListAsync());
         }
 
         // GET: Bookings/Details/5
@@ -86,7 +84,7 @@ namespace AukilaniHire.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BookingId,MemberId,RoomId,BeginDate,EndDate,BeginTime,EndTime")] Booking booking)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();

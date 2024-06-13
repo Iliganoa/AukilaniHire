@@ -21,18 +21,22 @@ namespace AukilaniHire.Controllers
 
         // GET: Bookings
         //Member and Room column is not showing on the web App
-        public async Task<IActionResult> Index(String sortOrder)
+        public async Task<IActionResult> Index(String sortOrder, string searchString)
         {
             var aukilaniHireContext = _context.Booking.Include(b => b.Member).Include(b => b.Room);
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
 
 
             var bookings = from b in aukilaniHireContext
                           select b;
 
-            
+            if (!String.IsNullOrEmpty(searchString))
+                bookings = bookings.Where(s => s.MemberId.Contains(searchString));
+
+
             switch (sortOrder)
             {
                 case "name_desc":

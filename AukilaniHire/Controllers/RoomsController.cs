@@ -41,9 +41,6 @@ namespace AukilaniHire.Controllers
 
                     rooms = rooms.OrderByDescending(m => m.Capacity);
                     break;
-
-                
-
             }
 
             return View(await rooms.ToListAsync());

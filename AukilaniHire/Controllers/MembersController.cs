@@ -29,15 +29,15 @@ namespace AukilaniHire.Controllers
                           select m;
 
             if (!String.IsNullOrEmpty(searchString))
-               members = members.Where(s => s.LastName.Contains(searchString )
-                                       || s.FirstName.Contains(searchString));
-        
+                members = members.Where(s => s.FirstName.Contains(searchString));
+            //|| s.RoomName.Contains(searchString));
+
             switch (sortOrder)
             {
                 case "name_desc":
                     members = members.OrderByDescending(m => m.FirstName);
-                    
-                    //members = members.OrderBy(m => m.FirstName);
+
+                    members = members.OrderBy(m => m.FirstName);
 
                     members = members.OrderByDescending(m => m.LastName);
 
@@ -46,7 +46,7 @@ namespace AukilaniHire.Controllers
                     break;
             }
 
-            return View(await members.ToListAsync());
+            return View(await members.AsNoTracking().ToListAsync());
 
         }
 

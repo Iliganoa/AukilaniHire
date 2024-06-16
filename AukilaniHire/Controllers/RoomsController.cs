@@ -20,10 +20,24 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index(String sortOrder, string searchString)
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
             var rooms = from m in _context.Room
                           select m;
@@ -42,6 +56,9 @@ namespace AukilaniHire.Controllers
                     rooms = rooms.OrderByDescending(m => m.Capacity);
                     break;
             }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Room>.CreateAsync(rooms.AsNoTracking(), pageNumber ?? 1, pageSize));
 
             return View(await rooms.ToListAsync());
 

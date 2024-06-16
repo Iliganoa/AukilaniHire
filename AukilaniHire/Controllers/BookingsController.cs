@@ -33,8 +33,8 @@ namespace AukilaniHire.Controllers
             var bookings = from b in aukilaniHireContext
                           select b;
 
-            if (!String.IsNullOrEmpty(searchString))
-                bookings = bookings.Where(s => s.MemberId.Contains(searchString));
+            //if (!String.IsNullOrEmpty(searchString))
+                //bookings = bookings.Where(b => b.Member.Contains(searchString));
 
 
             switch (sortOrder)

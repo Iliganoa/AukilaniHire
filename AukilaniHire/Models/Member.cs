@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace AukilaniHire.Models
 {
@@ -11,6 +12,8 @@ namespace AukilaniHire.Models
 
 
         [Required(ErrorMessage = "Must enter Lastname"), MaxLength(30)]
+        [RegularExpression("/([0-9])",ErrorMessage = "Name is not valid.")]
+        
         public string LastName { get; set; }
 
 

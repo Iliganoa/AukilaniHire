@@ -15,10 +15,11 @@ namespace AukilaniHire.Models
         public int RoomId { get; set; }
 
         [Display(Name ="Room Name")]
-        [Required(ErrorMessage ="Enter valid Room Name")]
+        //[Range(0,0,ErrorMessage ="Enter valid Room Name")]
+        [RegularExpression("-(0-9)*")]
         public string RoomName { get; set; }
 
-        [Display(Name = "Room Type")]
+        [Display(Name = "Select Room")]
         public RoomType RoomType { get; set; }
 
         [Range(20,500,ErrorMessage ="Must enter estimate from 20-500 people")]
@@ -26,8 +27,9 @@ namespace AukilaniHire.Models
         public int Capacity { get; set; }
 
 
-        // [MaxLength(7),MinLength(2,ErrorMessage = "Enter suitable price")]
+        [MaxLength(4),MinLength(3,ErrorMessage = "Enter suitable price")]
         [DataType(DataType.Currency)]
+
         public decimal HireCost{ get; set; }
 
         public ICollection<Booking> Bookings { get; set; }

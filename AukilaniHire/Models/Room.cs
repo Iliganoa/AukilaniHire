@@ -16,7 +16,7 @@ namespace AukilaniHire.Models
 
         [Display(Name ="Room Name")]
         //[Range(0,0,ErrorMessage ="Enter valid Room Name")]
-        [RegularExpression("-(0-9)*")]
+        [RegularExpression("^[^0-9]+$", ErrorMessage = "Invalid name")]
         public string RoomName { get; set; }
 
         [Display(Name = "Select Room")]

@@ -27,7 +27,7 @@ namespace AukilaniHire.Models
         public int Capacity { get; set; }
 
 
-        [MaxLength(4),MinLength(3,ErrorMessage = "Enter suitable price")]
+        [MaxLength(4),MinLength(3,ErrorMessage = "Minimum price $100")]
         [DataType(DataType.Currency)]
 
         public decimal HireCost{ get; set; }

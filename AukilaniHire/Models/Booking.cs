@@ -23,6 +23,7 @@ namespace AukilaniHire.Models
 
         [Required(ErrorMessage = "Enter valid Booking date")]
         [DataType(DataType.Date)]
+
         public DateOnly EndDate { get; set; }
 
         [Required(ErrorMessage = "Enter valid Booking time")]

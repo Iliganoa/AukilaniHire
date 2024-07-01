@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AukilaniHire.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AukilaniHire.Controllers
 {
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly AukilaniHireContext _context;

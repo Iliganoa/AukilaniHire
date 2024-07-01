@@ -32,7 +32,7 @@ namespace AukilaniHire.Models
         [RegularExpression("^([0|\\+[0-9]{1,5})?([0-9]{10})$", ErrorMessage = "Invalid number")]
         //[MaxLength(20)]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression("^([0|\\+[0-9]{1,5})?([0-9]{10})$", ErrorMessage = "Invalid number")]
+        //[RegularExpression("^([0|\\+[0-9]{1,5})?([0-9]{10})$", ErrorMessage = "Invalid number")]
         public string PhoneNumber { get; set; }
         
         public ICollection<Booking> Bookings { get; set; }

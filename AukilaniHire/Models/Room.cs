@@ -20,7 +20,7 @@ namespace AukilaniHire.Models
         [Required(ErrorMessage = "Must enter name")]
         public string RoomName { get; set; }
 
-        [Display(Name = "Room Type")]
+        [Display(Name = "Select Room")]
         public RoomType RoomType { get; set; }
 
         [Range(20,500,ErrorMessage ="Estimate From 20-500 People")]

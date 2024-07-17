@@ -12,6 +12,9 @@ internal class Program
         builder.Services.AddDbContext<AukilaniHireContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("AukilaniHireContext")?? throw new InvalidOperationException("Connection string 'AukilaniHireContext' not found.")));
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AukilaniHireContext>();
+        //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AukilaniHireContext>().AddDefaultTokenProviders();
+       
+
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();

@@ -18,7 +18,6 @@ namespace AukilaniHire.Models
 
         [Required(ErrorMessage = "Enter valid Booking date")]
          [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly BeginDate { get;  set; }
 
         [Required(ErrorMessage = "Enter valid Booking date")]

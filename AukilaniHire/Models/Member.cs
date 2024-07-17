@@ -27,12 +27,9 @@ namespace AukilaniHire.Models
         public string Email { get; set; }
 
 
-        //[Required(ErrorMessage = "Must enter Mobile number")]
-        [Display(Name = "Contact Number")]
-        [RegularExpression("^([0|\\+[0-9]{1,5})?([0-9]{10})$", ErrorMessage = "Invalid number")]
-        //[MaxLength(20)]
+        [Display(Name = "Mobile Number")]
+        [RegularExpression("^02[0-9]{9}$", ErrorMessage = "Invalid number")]
         [DataType(DataType.PhoneNumber)]
-        //[RegularExpression("^([0|\\+[0-9]{1,5})?([0-9]{10})$", ErrorMessage = "Invalid number")]
         public string PhoneNumber { get; set; }
         
         public ICollection<Booking> Bookings { get; set; }

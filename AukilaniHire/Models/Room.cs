@@ -29,7 +29,6 @@ namespace AukilaniHire.Models
         public int Capacity { get; set; }
 
 
-        //[MaxLength(4),MinLength(3,ErrorMessage = "Enter Suitable Price")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Must enter apropriate amount")]
         public decimal HireCost{ get; set; }

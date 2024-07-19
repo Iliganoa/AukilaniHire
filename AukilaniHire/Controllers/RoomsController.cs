@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AukilaniHire.Controllers
 {
-    [Authorize]
+    
     public class RoomsController : Controller
     {
         private readonly AukilaniHireContext _context;
@@ -85,6 +85,7 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Rooms/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -107,6 +108,7 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Rooms/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -158,6 +160,7 @@ namespace AukilaniHire.Controllers
         }
 
         // GET: Rooms/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
